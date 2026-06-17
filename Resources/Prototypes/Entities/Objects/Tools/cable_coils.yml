@@ -22,6 +22,9 @@
     size: Small
     storedRotation: -90
   - type: CablePlacer
+    blacklist:
+      components:
+      - CableRelay
   - type: Clickable
   - type: StaticPrice
     price: 0

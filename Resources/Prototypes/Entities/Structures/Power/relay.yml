@@ -1,0 +1,72 @@
+- type: entity
+  parent: [ BaseMachine, ConstructibleMachine ]
+  id: CableRelay
+  name: electro-relay
+  description: A length of power cable built into a relay. When switched on it severs its own powernet for the chosen voltages, breaking the line that runs through it without removing any cable. Open its interface to pick which voltages it cuts, or link it to a signaller.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    sprite: Structures/Power/relay.rsi
+    snapCardinals: true
+    layers:
+    - state: RelayOff
+      map: ["base"]
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.CableRelayVisuals.Severed:
+        base:
+          True: { state: Relay }
+          False: { state: RelayOff }
+  - type: CableRelay
+  - type: NodeContainer
+    nodes:
+      hv:
+        !type:RelayCableNode
+        nodeGroupID: HVPower
+      mv:
+        !type:RelayCableNode
+        nodeGroupID: MVPower
+      lv:
+        !type:RelayCableNode
+        nodeGroupID: Apc
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: BasicDevice
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: UserInterface
+    interfaces:
+      enum.CableRelayUiKey.Key:
+        type: CableRelayBoundUserInterface
+  - type: ActivatableUI
+    key: enum.CableRelayUiKey.Key
+  - type: UseDelay
+    delay: 2
+  - type: WiresPanel
+  - type: Machine
+    board: CableRelayMachineCircuitboard
+  - type: StaticPrice
+    price: 395
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MachineFrameDestroyed:
+            min: 1
+            max: 1
