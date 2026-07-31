@@ -18,3 +18,22 @@ reagent-desc-nitrous-oxide = You know how everything seems funnier when you're t
 
 reagent-name-frezon = frezon
 reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.
+
+# Assmos - /tg/ gases
+reagent-name-bz = BZ
+reagent-desc-bz = A powerful hallucinogenic nerve agent.
+
+reagent-name-healium = healium
+reagent-desc-healium = A soothing gas that heals wounds, but puts its patient to sleep.
+
+reagent-name-nitrium = nitrium
+reagent-desc-nitrium = A performance-enhancing gas that quickens the body, at a cost.
+
+reagent-name-pluoxium = pluoxium
+reagent-desc-pluoxium = A remarkably efficient breathable gas that carries oxygen far better than air.
+
+reagent-name-hyper-noblium = hyper-noblium
+reagent-desc-hyper-noblium = A super-stable noble gas that halts all reactions around it.
+
+reagent-name-zauker = zauker
+reagent-desc-zauker = An extremely toxic gas. Handle with extreme care.

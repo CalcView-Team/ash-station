@@ -395,3 +395,159 @@
         messages: [ "frezon-euphoric" ]
         probability: 0.1
         minScale: 1
+
+# Assmos - /tg/ gases
+
+- type: reagent
+  id: BZ
+  name: reagent-name-bz
+  desc: reagent-desc-bz
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#9370db"
+  metabolisms:
+    Respiration:
+      effects:
+      # Behaves like a hallucinogenic narcotic when breathed by most creatures.
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow
+        type: Add
+        time: 9
+      - !type:Drunk
+        boozePower: 20
+      - !type:Emote
+        minScale: 0.2
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+      - !type:PopupMessage
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ]
+        probability: 0.1
+        minScale: 0.5
+      - !type:HealthChange
+        minScale: 3
+        ignoreResistances: true
+        scaling: true
+        damage:
+          types:
+            Cellular: 0.5
+
+- type: reagent
+  id: Healium
+  name: reagent-name-healium
+  desc: reagent-desc-healium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: strange
+  color: "#fa8072"
+  metabolisms:
+    Respiration:
+      effects:
+      # Heals physical, burn and toxin damage, but knocks the patient out in large amounts.
+      - !type:HealthChange
+        ignoreResistances: true
+        scaling: true
+        damage:
+          groups:
+            Brute: -2
+            Burn: -2
+          types:
+            Poison: -5
+      - !type:Drunk
+        boozePower: 35
+        minScale: 1
+      - !type:ModifyStatusEffect
+        minScale: 3
+        effectProto: StatusEffectForcedSleeping
+        type: Add
+        time: 3
+
+- type: reagent
+  id: Nitrium
+  name: reagent-name-nitrium
+  desc: reagent-desc-nitrium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: sour
+  color: "#a52a2a"
+  metabolisms:
+    Respiration:
+      effects:
+      # Boosts movement speed, but poisons and exhausts at high concentrations.
+      - !type:MovementSpeedModifier
+        walkSpeedModifier: 1.25
+        sprintSpeedModifier: 1.25
+      - !type:ModifyStatusEffect
+        minScale: 2
+        effectProto: StatusEffectStutter
+        type: Add
+        time: 8
+      - !type:HealthChange
+        minScale: 3
+        ignoreResistances: true
+        scaling: true
+        damage:
+          types:
+            Asphyxiation: 1.5
+            Poison: 1
+
+- type: reagent
+  id: Pluoxium
+  name: reagent-name-pluoxium
+  desc: reagent-desc-pluoxium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#7b68ee"
+  metabolisms:
+    Respiration:
+      effects:
+      # Oxygenates the bloodstream far more efficiently than regular oxygen.
+      - !type:Oxygenate
+        factor: 8
+        conditions:
+        - !type:MetabolizerTypeCondition
+          type: [ Human, Animal, Rat, Plant ]
+      # Convert Pluoxium into CO2.
+      - !type:ModifyLungGas
+        ratios:
+          CarbonDioxide: 1.0
+          Pluoxium: -1.0
+
+- type: reagent
+  id: Hyper-Noblium
+  name: reagent-name-hyper-noblium
+  desc: reagent-desc-hyper-noblium
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#33cccc"
+  # An inert noble gas with no effect on living creatures.
+
+- type: reagent
+  id: Zauker
+  name: reagent-name-zauker
+  desc: reagent-desc-zauker
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: bitter
+  color: "#1c1a1a"
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        scaling: true
+        damage:
+          types:
+            Poison: 6
+            Heat: 2
+            Slash: 2
+    Respiration:
+      effects:
+      # Extremely toxic.
+      - !type:HealthChange
+        ignoreResistances: true
+        scaling: true
+        damage:
+          types:
+            Poison: 6
+            Heat: 2
+            Slash: 2

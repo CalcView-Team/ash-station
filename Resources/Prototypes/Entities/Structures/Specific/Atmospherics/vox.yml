@@ -15,6 +15,14 @@
       Ammonia: stationAmmonia
       NitrousOxide: stationNO
       Frezon: danger
+      # Assmos - /tg/ gases
+      BZ: danger
+      Healium: danger
+      Nitrium: danger
+      Pluoxium: danger
+      Hydrogen: danger
+      HyperNoblium: danger
+      Zauker: danger
 
 - type: entity
   parent: [AirSensorVoxBase, AirSensor]

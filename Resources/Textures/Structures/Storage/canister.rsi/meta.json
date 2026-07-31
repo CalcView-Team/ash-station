@@ -8,6 +8,60 @@
     },
     "states": [
         {
+            "name": "bz"
+        },
+        {
+            "name": "bz-1"
+        },
+        {
+            "name": "mask-bz"
+        },
+        {
+            "name": "healium"
+        },
+        {
+            "name": "healium-1"
+        },
+        {
+            "name": "mask-healium"
+        },
+        {
+            "name": "nitrium"
+        },
+        {
+            "name": "nitrium-1"
+        },
+        {
+            "name": "mask-nitrium"
+        },
+        {
+            "name": "hydrogen"
+        },
+        {
+            "name": "hydrogen-1"
+        },
+        {
+            "name": "mask-hydrogen"
+        },
+        {
+            "name": "hyper-noblium"
+        },
+        {
+            "name": "hyper-noblium-1"
+        },
+        {
+            "name": "mask-hyper-noblium"
+        },
+        {
+            "name": "zauker"
+        },
+        {
+            "name": "zauker-1"
+        },
+        {
+            "name": "mask-zauker"
+        },
+        {
             "name": "black"
         },
         {

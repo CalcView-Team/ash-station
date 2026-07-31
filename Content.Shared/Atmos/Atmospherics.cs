@@ -223,7 +223,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 9;
+        public const int TotalNumberOfGases = 16;
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -301,6 +301,69 @@ namespace Content.Shared.Atmos
         ///     Divisor for Ammonia Oxygen reaction so that it doesn't happen instantaneously.
         /// </summary>
         public const float AmmoniaOxygenReactionRate = 10f;
+
+        #region Assmos - /tg/ gases
+
+        /// <summary>
+        ///     The amount of energy 1 mole of BZ forming from N2O and plasma releases.
+        /// </summary>
+        public const float BZProductionEnergy = 80e3f;
+
+        /// <summary>
+        ///     The amount of energy 1 mol of Healium forming from BZ and frezon releases.
+        /// </summary>
+        public const float HealiumProductionEnergy = 9e3f;
+
+        /// <summary>
+        ///     The amount of energy 1 mol of Nitrium forming from Tritium, Nitrogen and BZ releases.
+        /// </summary>
+        public const float NitriumProductionEnergy = -100e3f;
+
+        /// <summary>
+        ///     The amount of energy 1 mol of Nitrium decomposing into nitrogen and hydrogen releases.
+        /// </summary>
+        public const float NitriumDecompositionEnergy = 30e3f;
+
+        /// <summary>
+        ///     The amount of energy 1 mol of Pluoxium forming releases.
+        /// </summary>
+        public const float PluoxiumProductionEnergy = 250;
+
+        /// <summary>
+        ///     Minimum energy required for the high-yield hydrogen burn branch.
+        /// </summary>
+        public const float MinimumHydrogenOxyburnEnergy = 143000f;
+
+        public const float HydrogenBurnOxyFactor = 100f;
+        public const float HydrogenBurnH2Factor = 10f;
+
+        /// <summary>
+        ///     The amount of energy 1 mol of hyper-noblium forming from tritium and nitrogen releases.
+        /// </summary>
+        public const float HyperNobliumProductionEnergy = 2e7f;
+
+        /// <summary>
+        ///     The amount of energy half a mole of zauker forming from hypernoblium and nitrium consumes.
+        /// </summary>
+        public const float ZaukerProductionEnergy = 5000f;
+
+        /// <summary>
+        ///     The temperature scaling factor for zauker formation.
+        ///     Raised from tg's 5e-6 to keep yield reasonable at the lowered (1500-3000K) production band.
+        /// </summary>
+        public const float ZaukerTemperatureScale = 1e-4f;
+
+        /// <summary>
+        ///     The amount of energy a mole of zauker decomposing in the presence of nitrogen releases.
+        /// </summary>
+        public const float ZaukerDecompositionEnergy = 460f;
+
+        /// <summary>
+        ///     The maximum number of moles of zauker that can decompose per reaction tick.
+        /// </summary>
+        public const float ZaukerDecompositionMaxRate = 20f;
+
+        #endregion
 
         /// <summary>
         ///     Determines at what pressure the ultra-high pressure red icon is displayed.
@@ -387,6 +450,14 @@ namespace Content.Shared.Atmos
         WaterVapor = 5,
         Ammonia = 6,
         NitrousOxide = 7,
-        Frezon = 8
+        Frezon = 8,
+        // Assmos - /tg/ gases
+        BZ = 9,
+        Healium = 10,
+        Nitrium = 11,
+        Pluoxium = 12,
+        Hydrogen = 13,
+        HyperNoblium = 14,
+        Zauker = 15
     }
 }

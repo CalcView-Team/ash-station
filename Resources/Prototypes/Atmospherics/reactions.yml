@@ -58,6 +58,105 @@
   effects:
   - !type:N2ODecompositionReaction {}
 
+# Assmos - /tg/ gases
+
+- type: gasReaction
+  id: BZProduction
+  priority: 2
+  maximumTemperature: 313.149
+  minimumRequirements:
+    Plasma: 10
+    NitrousOxide: 10
+  effects:
+  - !type:BZProductionReaction {}
+
+- type: gasReaction
+  id: HealiumProduction
+  priority: 2
+  minimumTemperature: 22.0
+  maximumTemperature: 300.0
+  minimumRequirements:
+    Frezon: 5
+    BZ: 5
+  effects:
+  - !type:HealiumProductionReaction {}
+
+- type: gasReaction
+  id: NitriumProduction
+  priority: 2
+  minimumTemperature: 1500.0
+  minimumRequirements:
+    Nitrogen: 10
+    Tritium: 20
+    BZ: 5
+  effects:
+  - !type:NitriumProductionReaction {}
+
+- type: gasReaction
+  id: NitriumDecomposition
+  priority: 2
+  maximumTemperature: 343.15
+  minimumRequirements:
+    Oxygen: 0.01
+    Nitrium: 0.01
+  effects:
+  - !type:NitriumDecompositionReaction {}
+
+- type: gasReaction
+  id: PluoxiumProduction
+  priority: 3
+  minimumTemperature: 50.0
+  maximumTemperature: 273.15
+  minimumRequirements:
+    Oxygen: 0.01
+    CarbonDioxide: 0.01
+    Tritium: 0.01
+  effects:
+  - !type:PluoxiumTritiumProductionReaction {}
+
+- type: gasReaction
+  id: HydrogenFire
+  priority: -1
+  minimumTemperature: 373.149
+  minimumRequirements:
+    Oxygen: 0.01
+    Hydrogen: 0.01
+  effects:
+  - !type:HydrogenFireReaction {}
+
+- type: gasReaction
+  id: HyperNobliumProduction
+  priority: 7
+  minimumTemperature: 2.7
+  maximumTemperature: 15
+  minimumRequirements:
+    Nitrogen: 10
+    Tritium: 5
+  effects:
+  - !type:HyperNobliumProductionReaction {}
+
+- type: gasReaction
+  id: ZaukerProduction
+  priority: 9
+  minimumTemperature: 1500
+  maximumTemperature: 3000
+  minimumRequirements:
+    Nitrium: 0.01
+    HyperNoblium: 0.01
+  effects:
+  - !type:ZaukerProductionReaction {}
+
+- type: gasReaction
+  id: ZaukerDecomposition
+  priority: 10
+  minimumRequirements:
+    Nitrogen: 0.01
+    Zauker: 0.01
+  effects:
+  - !type:ZaukerDecompositionReaction {}
+
+# Assmos - /tg/ gases end
+
 #- type: gasReaction
 #  id: WaterVaporPuddle
 #  priority: 1
