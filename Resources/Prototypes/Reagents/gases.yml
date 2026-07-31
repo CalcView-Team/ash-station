@@ -445,13 +445,15 @@
     Respiration:
       effects:
       # Heals physical, burn and toxin damage, but knocks the patient out in large amounts.
+      - !type:EvenHealthChange
+        ignoreResistances: true
+        damage:
+          Brute: -2
+          Burn: -2
       - !type:HealthChange
         ignoreResistances: true
         scaling: true
         damage:
-          groups:
-            Brute: -2
-            Burn: -2
           types:
             Poison: -5
       - !type:Drunk

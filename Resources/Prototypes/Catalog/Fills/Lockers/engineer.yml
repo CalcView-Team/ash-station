@@ -151,12 +151,16 @@
     - id: ClothingMaskGasAtmos
     - id: ClothingOuterSuitAtmosFire
     - id: ClothingHeadHelmetAtmosFire
+    - id: ClothingHandsGlovesAtmosInsulated
+    - id: ClothingShoesBootsMag
     - id: GasAnalyzer
     - id: MedkitOxygenFilled
     - id: HolofanProjector
     - id: RCD
+    - id: RPD
     - id: RCDAmmo
     - id: AirGrenade
+    - id: WelderIndustrialAdvanced
     - id: PlushieLizardJobAtmospherictechnician
       prob: 0.02
 

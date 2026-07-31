@@ -27,9 +27,6 @@
     id: AtmosPDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
-  #storage:
-    #back:
-    #- Stuff
 
 - type: chameleonOutfit
   id: AtmosphericTechnicianChameleonOutfit

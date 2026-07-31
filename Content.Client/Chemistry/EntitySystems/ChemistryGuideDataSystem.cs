@@ -66,7 +66,9 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
                 reaction);
             foreach (var product in reaction.Products.Keys)
             {
-                _reagentSources[product].Add(data);
+                // Skip products whose reagent prototype is missing (e.g. removed or failed to load).
+                if (_reagentSources.TryGetValue(product, out var sources))
+                    sources.Add(data);
             }
         }
 
@@ -78,7 +80,10 @@ public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataS
             var data = new ReagentGasSourceData(
                 new () { DefaultCondenseCategory },
                 gas);
-            _reagentSources[gas.Reagent].Add(data);
+
+            // Skip gases whose associated reagent prototype is missing, rather than crashing.
+            if (_reagentSources.TryGetValue(gas.Reagent, out var sources))
+                sources.Add(data);
         }
 
         // store the names of the entities used so we don't get repeats in the guide.

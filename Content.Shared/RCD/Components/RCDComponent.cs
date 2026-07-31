@@ -1,3 +1,4 @@
+using Content.Shared.Atmos.Components;
 using Content.Shared.RCD.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
@@ -48,6 +49,14 @@ public sealed partial class RCDComponent : Component
     }
 
     private Direction _constructionDirection = Direction.South;
+
+    /// <summary>
+    /// The atmos pipe layer that layered entities (pipes, pumps, etc.) will be built on.
+    /// Selected on the client based on the mouse cursor position within the target tile.
+    /// Ignored for prototypes whose target entity has no alternative layer prototypes.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public AtmosPipeLayer PipeLayer { get; set; } = AtmosPipeLayer.Primary;
 
     /// <summary>
     /// Returns a rotated transform based on the specified ConstructionDirection

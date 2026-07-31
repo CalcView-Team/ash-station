@@ -1,4 +1,6 @@
 using Content.Shared.Administration.Logs;
+using Content.Shared.Atmos.Components;
+using Content.Shared.Atmos.EntitySystems;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Construction;
 using Content.Shared.Database;
@@ -43,6 +45,8 @@ public sealed partial class RCDSystem : EntitySystem
     [Dependency] private SharedMapSystem _mapSystem = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
     [Dependency] private TagSystem _tags = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private SharedAtmosPipeLayersSystem _pipeLayers = default!;
 
     private readonly int _instantConstructionDelay = 0;
     private readonly EntProtoId _instantConstructionFx = "EffectRCDConstruct0";
@@ -63,6 +67,7 @@ public sealed partial class RCDSystem : EntitySystem
         SubscribeLocalEvent<RCDComponent, DoAfterAttemptEvent<RCDDoAfterEvent>>(OnDoAfterAttempt);
         SubscribeLocalEvent<RCDComponent, RCDSystemMessage>(OnRCDSystemMessage);
         SubscribeNetworkEvent<RCDConstructionGhostRotationEvent>(OnRCDconstructionGhostRotationEvent);
+        SubscribeNetworkEvent<RCDConstructionGhostLayerEvent>(OnRCDConstructionGhostLayerEvent);
     }
 
     #region Event handling
@@ -324,6 +329,47 @@ public sealed partial class RCDSystem : EntitySystem
         Dirty(uid, rcd);
     }
 
+    private void OnRCDConstructionGhostLayerEvent(RCDConstructionGhostLayerEvent ev, EntitySessionEventArgs session)
+    {
+        var uid = GetEntity(ev.NetEntity);
+
+        // Determine if player that sent the message is carrying the specified RCD in their active hand
+        if (session.SenderSession.AttachedEntity is not { } player)
+            return;
+
+        if (_hands.GetActiveItem(player) != uid)
+            return;
+
+        if (!TryComp<RCDComponent>(uid, out var rcd) || rcd.PipeLayer == ev.Layer)
+            return;
+
+        // Update the selected pipe layer
+        rcd.PipeLayer = ev.Layer;
+        Dirty(uid, rcd);
+    }
+
+    /// <summary>
+    /// Returns the entity prototype the operation will actually spawn, resolving the correct
+    /// atmos pipe layer variant (e.g. GasPipeStraightAlt1) for layered entities. Non-layered
+    /// prototypes are returned unchanged.
+    /// </summary>
+    public string? GetConstructedPrototype(RCDPrototype prototype, RCDComponent component)
+    {
+        if (prototype.Prototype == null)
+            return null;
+
+        if (prototype.Mode == RcdMode.ConstructObject &&
+            component.PipeLayer != AtmosPipeLayer.Primary &&
+            ProtoMan.TryIndex<EntityPrototype>(prototype.Prototype, out var entProto) &&
+            entProto.TryComp<AtmosPipeLayersComponent>(out var layers, _factory) &&
+            _pipeLayers.TryGetAlternativePrototype(layers, component.PipeLayer, out var altId))
+        {
+            return altId.Id;
+        }
+
+        return prototype.Prototype;
+    }
+
     #endregion
 
     #region Entity construction/deconstruction rule checks
@@ -344,7 +390,7 @@ public sealed partial class RCDSystem : EntitySystem
         if (charges == 0)
         {
             if (popMsgs)
-                _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message"), uid, user);
+                _popup.PopupEntity(Loc.GetString("rcd-component-no-ammo-message", ("device", Name(uid))), uid, user);
 
             return false;
         }
@@ -352,7 +398,7 @@ public sealed partial class RCDSystem : EntitySystem
         if (prototype.Cost > charges)
         {
             if (popMsgs)
-                _popup.PopupEntity(Loc.GetString("rcd-component-insufficient-ammo-message"), uid, user);
+                _popup.PopupEntity(Loc.GetString("rcd-component-insufficient-ammo-message", ("device", Name(uid))), uid, user);
 
             return false;
         }
@@ -456,6 +502,11 @@ public sealed partial class RCDSystem : EntitySystem
         var isWindow = prototype.ConstructionRules.Contains(RcdConstructionRule.IsWindow);
         var isCatwalk = prototype.ConstructionRules.Contains(RcdConstructionRule.IsCatwalk);
 
+        // Resolve the prototype we would actually spawn, accounting for the selected pipe layer,
+        // so identical-entity checks are performed per-layer (e.g. a secondary-layer pipe does not
+        // block placing a primary-layer pipe in the same tile).
+        var constructedProto = GetConstructedPrototype(prototype, component);
+
         _intersectingEntities.Clear();
         _lookup.GetLocalEntitiesIntersecting(gridUid, position, _intersectingEntities, -0.05f, LookupFlags.Uncontained);
 
@@ -463,7 +514,7 @@ public sealed partial class RCDSystem : EntitySystem
         {
             // If the entity is the exact same prototype as what we are trying to build, then block it.
             // This is to prevent spamming objects on the same tile (e.g. lights)
-            if (prototype.Prototype != null && MetaData(ent).EntityPrototype?.ID == prototype.Prototype)
+            if (constructedProto != null && MetaData(ent).EntityPrototype?.ID == constructedProto)
             {
                 var isIdentical = true;
 
@@ -611,7 +662,8 @@ public sealed partial class RCDSystem : EntitySystem
                         throw new NotImplementedException($"Rotation type {prototype.Rotation} in RCD prototype {prototype.ID} does not have a direction conversion.");
                 }
 
-                var ent = SpawnAttachedTo(prototype.Prototype, _mapSystem.GridTileToLocal(gridUid, mapGrid, position), rotation: rotation);
+                var protoToSpawn = GetConstructedPrototype(prototype, component) ?? prototype.Prototype;
+                var ent = SpawnAttachedTo(protoToSpawn, _mapSystem.GridTileToLocal(gridUid, mapGrid, position), rotation: rotation);
 
                 _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(user):user} used RCD to spawn {ToPrettyString(ent)} at {position} on grid {gridUid}");
                 break;

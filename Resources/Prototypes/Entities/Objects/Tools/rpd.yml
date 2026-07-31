@@ -1,0 +1,69 @@
+# RPD (Rapid Piping Device) - an RCD-style tool dedicated to atmospherics.
+# Reuses the RCD component/system; loaded with pipe & atmos device operations.
+- type: entity
+  id: RPD
+  parent: [ BaseItem, BaseEngineeringContraband ]
+  name: RPD
+  description: The rapid piping device can be used to quickly lay down atmospheric pipes and devices. Requires compressed matter to function.
+  components:
+  - type: RCD
+    availablePrototypes:
+    - RPDPipeStraight
+    - RPDPipeBend
+    - RPDPipeTJunction
+    - RPDPipeFourway
+    - RPDPipeHalf
+    - RPDPipeManifold
+    - RPDPressurePump
+    - RPDVolumePump
+    - RPDPressureRegulator
+    - RPDValve
+    - RPDSignalValve
+    - RPDPassiveGate
+    - RPDVentPump
+    - RPDVentScrubber
+    - RPDPassiveVent
+    - RPDDualPortVentPump
+    - RPDOutletInjector
+    - RPDGasFilter
+    - RPDGasMixer
+    - RPDGasPort
+    - RPDGasPipeSensor
+    - RPDRadiator
+    - RPDRadiatorBend
+  - type: LimitedCharges
+    maxCharges: 40
+  # Slowly rebuilds matter on its own so atmos isn't stranded mid-run without a refill.
+  - type: AutoRecharge
+    rechargeDuration: 15
+  - type: Sprite
+    sprite: Objects/Tools/rpd.rsi
+    state: icon
+  - type: Item
+    size: Normal
+  - type: Clothing
+    sprite: Objects/Tools/rpd.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 600
+      Plastic: 100
+  - type: StaticPrice
+    price: 110
+  - type: UserInterface
+    interfaces:
+      enum.RcdUiKey.Key:
+        type: RCDMenuBoundUserInterface
+  - type: ActivatableUI
+    inHandsOnly: true
+    key: enum.RcdUiKey.Key
+
+- type: entity
+  id: RPDEmpty
+  parent: RPD
+  suffix: Empty
+  components:
+  - type: LimitedCharges
+    lastCharges: -1

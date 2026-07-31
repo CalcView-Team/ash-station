@@ -28,6 +28,11 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
             ["Airlocks"] = ("rcd-component-airlocks", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/airlocks.png"))),
             ["Electrical"] = ("rcd-component-electrical", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/multicoil.png"))),
             ["Lighting"] = ("rcd-component-lighting", new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/Radial/RCD/lighting.png"))),
+            ["Pipes"] = ("rcd-component-pipes", new SpriteSpecifier.Rsi(new ResPath("Structures/Piping/Atmospherics/pipe.rsi"), "pipeStraight")),
+            ["PumpsAndValves"] = ("rcd-component-pumps-and-valves", new SpriteSpecifier.Rsi(new ResPath("Structures/Piping/Atmospherics/pump.rsi"), "pumpPressure")),
+            ["VentsAndScrubbers"] = ("rcd-component-vents-and-scrubbers", new SpriteSpecifier.Rsi(new ResPath("Structures/Piping/Atmospherics/vent.rsi"), "vent_off")),
+            ["FiltersAndMixers"] = ("rcd-component-filters-and-mixers", new SpriteSpecifier.Rsi(new ResPath("Structures/Piping/Atmospherics/gasfilter.rsi"), "gasFilter")),
+            ["DevicesAndPorts"] = ("rcd-component-devices-and-ports", new SpriteSpecifier.Rsi(new ResPath("Structures/Piping/Atmospherics/gascanisterport.rsi"), "gasCanisterPort")),
         };
 
     private SimpleRadialMenu? _menu;
@@ -118,7 +123,8 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
         if (_playerManager.LocalSession?.AttachedEntity == null)
             return;
 
-        var msg = Loc.GetString("rcd-component-change-mode", ("mode", Loc.GetString(proto.SetName)));
+        var device = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
+        var msg = Loc.GetString("rcd-component-change-mode", ("device", device), ("mode", Loc.GetString(proto.SetName)));
 
         if (proto.Mode is RcdMode.ConstructTile or RcdMode.ConstructObject)
         {
@@ -130,7 +136,7 @@ public sealed partial class RCDMenuBoundUserInterface : BoundUserInterface
                 name = entProto.Name;
             }
 
-            msg = Loc.GetString("rcd-component-change-build-mode", ("name", name));
+            msg = Loc.GetString("rcd-component-change-build-mode", ("device", device), ("name", name));
         }
 
         // Popup message

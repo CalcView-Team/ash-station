@@ -1,3 +1,4 @@
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -14,6 +15,17 @@ public sealed class RCDConstructionGhostRotationEvent(NetEntity netEntity, Direc
 {
     public readonly NetEntity NetEntity = netEntity;
     public readonly Direction Direction = direction;
+}
+
+/// <summary>
+/// Sent by the client to update which atmos pipe layer the RCD/RPD will build on,
+/// based on the position of the mouse cursor within the target tile.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class RCDConstructionGhostLayerEvent(NetEntity netEntity, AtmosPipeLayer layer) : EntityEventArgs
+{
+    public readonly NetEntity NetEntity = netEntity;
+    public readonly AtmosPipeLayer Layer = layer;
 }
 
 [Serializable, NetSerializable]

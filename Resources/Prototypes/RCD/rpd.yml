@@ -1,0 +1,338 @@
+# RPD (Rapid Piping Device) operations.
+# These reuse the RCD system: each entry is a ConstructObject operation that
+# spawns an atmospherics entity. Pipe layer (Primary / Secondary / Tertiary) is
+# picked with the mouse via AlignAtmosPipeLayers, so there is no need for a
+# separate operation per layer.
+#
+# Categories must match the keys in RCDMenuBoundUserInterface.PrototypesGroupingInfo,
+# otherwise the entry is silently dropped from the radial menu.
+#
+# CollisionMask is None because pipes/devices have canCollide: false; overlap
+# between conflicting pipe directions/layers is handled by PipeRestrictOverlap.
+
+# === Pipes ===
+- type: rcd
+  id: RPDPipeStraight
+  category: Pipes
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeStraight
+  mode: ConstructObject
+  prototype: GasPipeStraight
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDPipeBend
+  category: Pipes
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeBend
+  mode: ConstructObject
+  prototype: GasPipeBend
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDPipeTJunction
+  category: Pipes
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeTJunction
+  mode: ConstructObject
+  prototype: GasPipeTJunction
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDPipeFourway
+  category: Pipes
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeFourway
+  mode: ConstructObject
+  prototype: GasPipeFourway
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+
+- type: rcd
+  id: RPDPipeHalf
+  category: Pipes
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    state: pipeHalf
+  mode: ConstructObject
+  prototype: GasPipeHalf
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+  allowMultiDirection: true
+
+# The manifold bridges all three layers at once, so it has no layer variants,
+# but its sprite is directional and must still follow the placement rotation
+- type: rcd
+  id: RPDPipeManifold
+  category: Pipes
+  sprite:
+    sprite: Structures/Piping/Atmospherics/manifold.rsi
+    state: pipeManifold
+  mode: ConstructObject
+  prototype: GasPipeManifold
+  cost: 1
+  delay: 1
+  rotation: User
+  fx: EffectRCDConstruct1
+
+# === Pumps and valves ===
+- type: rcd
+  id: RPDPressurePump
+  category: PumpsAndValves
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPressure
+  mode: ConstructObject
+  prototype: GasPressurePump
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDVolumePump
+  category: PumpsAndValves
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpVolume
+  mode: ConstructObject
+  prototype: GasVolumePump
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDPressureRegulator
+  category: PumpsAndValves
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPressureRegulator
+  mode: ConstructObject
+  prototype: GasPressureRegulator
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDValve
+  category: PumpsAndValves
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpManualValve
+  mode: ConstructObject
+  prototype: GasValve
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDSignalValve
+  category: PumpsAndValves
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpSignalValve
+  mode: ConstructObject
+  prototype: SignalControlledValve
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDPassiveGate
+  category: PumpsAndValves
+  sprite:
+    sprite: Structures/Piping/Atmospherics/pump.rsi
+    state: pumpPassiveGate
+  mode: ConstructObject
+  prototype: GasPassiveGate
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+# === Vents and scrubbers ===
+- type: rcd
+  id: RPDVentPump
+  category: VentsAndScrubbers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_off
+  mode: ConstructObject
+  prototype: GasVentPump
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDVentScrubber
+  category: VentsAndScrubbers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/scrubber.rsi
+    state: scrub_off
+  mode: ConstructObject
+  prototype: GasVentScrubber
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDPassiveVent
+  category: VentsAndScrubbers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_passive
+  mode: ConstructObject
+  prototype: GasPassiveVent
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDDualPortVentPump
+  category: VentsAndScrubbers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/vent.rsi
+    state: vent_direction
+  mode: ConstructObject
+  prototype: GasDualPortVentPump
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDOutletInjector
+  category: VentsAndScrubbers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/outletinjector.rsi
+    state: injector
+  mode: ConstructObject
+  prototype: GasOutletInjector
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+# === Filters and mixers ===
+- type: rcd
+  id: RPDGasFilter
+  category: FiltersAndMixers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    state: gasFilter
+  mode: ConstructObject
+  prototype: GasFilter
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDGasMixer
+  category: FiltersAndMixers
+  sprite:
+    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    state: gasMixer
+  mode: ConstructObject
+  prototype: GasMixer
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+# === Devices and ports ===
+- type: rcd
+  id: RPDGasPort
+  category: DevicesAndPorts
+  sprite:
+    sprite: Structures/Piping/Atmospherics/gascanisterport.rsi
+    state: gasCanisterPort
+  mode: ConstructObject
+  prototype: GasPort
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+
+- type: rcd
+  id: RPDGasPipeSensor
+  category: DevicesAndPorts
+  sprite:
+    sprite: Structures/Piping/Atmospherics/gas_pipe_sensor.rsi
+    state: icon
+  mode: ConstructObject
+  prototype: GasPipeSensor
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+# Radiators are the HeatExchanger entities; they only exist on the primary layer
+- type: rcd
+  id: RPDRadiator
+  category: DevicesAndPorts
+  sprite:
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    state: heStraight
+  mode: ConstructObject
+  prototype: HeatExchanger
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
+
+- type: rcd
+  id: RPDRadiatorBend
+  category: DevicesAndPorts
+  sprite:
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    state: heBend
+  mode: ConstructObject
+  prototype: HeatExchangerBend
+  cost: 1
+  delay: 2
+  rotation: User
+  fx: EffectRCDConstruct2
+  allowMultiDirection: true
