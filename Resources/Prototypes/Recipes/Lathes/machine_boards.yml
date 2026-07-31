@@ -80,6 +80,15 @@
   id: SMESMachineCircuitboard
   result: SMESMachineCircuitboard
 
+- type: latheRecipe
+  parent: BaseMachineRecipeCategory
+  id: CableRelayMachineCircuitboard
+  result: CableRelayMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 500
+    Plastic: 100
+
 # Security techfab
 - type: latheRecipe
   parent: [ BaseCircuitboardRecipe, BaseMachineRecipeCategory ]
