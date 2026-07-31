@@ -384,6 +384,26 @@
         Heat: 0 # no protection
 
 - type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesAtmosInsulated
+  name: atmos insulated gloves
+  description: As soon as you put them on, you feel the seriousness of your atmosphere.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/atmosinsuls.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/atmosinsuls.rsi
+  - type: Insulated
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.85
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-orange
+  - type: FingerprintMask
+
+- type: entity
   parent: ClothingHandsButcherable
   id: ClothingHandsGlovesMercFingerless
   name: mercenary fingerless gloves
