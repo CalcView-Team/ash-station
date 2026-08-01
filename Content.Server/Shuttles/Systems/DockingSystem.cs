@@ -64,6 +64,19 @@ public sealed partial class DockingSystem : SharedDockingSystem
     }
 
     [SubscribeLocalEvent]
+    private void OnTerminating(Entity<DockingComponent> entity, ref EntityTerminatingEvent args)
+    {
+        // OnShutdown bails out on deletion, because by then the life stage is already past MapInitialized.
+        // Without this, consoles keep serving a dock that no longer exists until something else happens to
+        // refresh them, and clicking it just fails to resolve the entity server-side.
+        var gridUid = Transform(entity.Owner).GridUid;
+
+        // If the whole grid is going away then every console is getting refreshed anyway.
+        if (gridUid != null && !Terminating(gridUid.Value))
+            _console.RefreshShuttleConsoles();
+    }
+
+    [SubscribeLocalEvent]
     private void OnStartup(Entity<DockingComponent> entity, ref ComponentStartup args)
     {
         var uid = entity.Owner;
