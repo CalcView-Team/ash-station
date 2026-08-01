@@ -105,6 +105,42 @@
         - GlassAirlockLayer
 
 - type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleAtmos
+  suffix: Docking, Atmos
+  name: external atmospherics airlock
+  description: Necessary for connecting two space craft together. This one carries a pipe through the doorway, so docking it to another one links up both pipe networks.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/atmos_shuttle.rsi
+  - type: AtmosDockingPort
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North # South is the docking side, so the pipe faces inwards.
+        volume: 200
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockGlassShuttleAtmos
+  suffix: Glass, Docking, Atmos
+  name: external atmospherics airlock
+  description: Necessary for connecting two space craft together. This one carries a pipe through the doorway, so docking it to another one links up both pipe networks.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/atmos_shuttle.rsi
+  - type: AtmosDockingPort
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: North # South is the docking side, so the pipe faces inwards.
+        volume: 200
+
+- type: entity
   id: AirlockShuttleAssembly
   parent: AirlockAssembly
   name: external airlock assembly
